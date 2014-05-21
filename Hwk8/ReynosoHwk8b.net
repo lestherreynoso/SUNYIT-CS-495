@@ -1,0 +1,76 @@
+net
+{
+  node_size = (100 30);
+
+}
+
+
+node BrokeElectionLaw
+{
+   label = ""; 
+   position = ( 200 100 );
+   states = ( "yes" "no" );
+}
+node PoliticallyMotivatedProsecutor
+{
+   label = ""; 
+   position = ( 131 195 );
+   states = ( "yes" "no" );
+}
+node Indicated
+{
+   label = ""; 
+   position = ( 19 159 );
+   states = ( "yes" "no" );
+}
+node Guilty
+{
+   label = ""; 
+   position = ( 19 41 );
+   states = ( "yes" "no" );
+}
+node Jailed
+{
+   label = ""; 
+   position = ( 131 5 );
+   states = ( "yes" "no" );
+}
+potential ( BrokeElectionLaw )
+{
+   data =  (0.9 0.1) ;
+}
+
+potential ( PoliticallyMotivatedProsecutor )
+{
+   data =  (0.1 0.9) ;
+}
+
+potential ( Indicated | BrokeElectionLaw PoliticallyMotivatedProsecutor )
+{
+   data = 
+(((1 0)  
+  (1 0)) 
+ ((1 0)  
+  (1 0)))
+;
+}
+potential ( Guilty | PoliticallyMotivatedProsecutor Indicated BrokeElectionLaw )
+{
+   data = 
+((((0.9 0.1)   
+   (0.8 0.2))  
+  ((0 1)   
+   (0 1))) 
+ (((0.2 0.8)   
+   (0.1 0.9))  
+  ((0 1)   
+   (0 1))))
+;
+}
+potential ( Jailed | Guilty )
+{
+   data = 
+((1 0) 
+ (1 0))
+;
+}
